@@ -18,7 +18,7 @@ public interface GroupService {
 
     ApiResponse addGroupMembers(AddGroupMembersReqDto payload);
 
-    List<FriendResponse> friendsList(Long userId);
+    List<AddMemberFriendsResponseDto> friendsList(Long userId);
     List<String> friendsNames(Long userId);
 
 }

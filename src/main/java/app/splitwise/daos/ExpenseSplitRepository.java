@@ -102,4 +102,17 @@ public interface ExpenseSplitRepository extends JpaRepository<ExpenseSplit, Long
     """)
     List<RecentActivityResponseDto> recentActivity(@Param("userId") Long userId);
 
+
+    @Query("""
+        SELECT new app.splitwise.dtos.RecentActivityResponseDto(
+          es.expense.expenseGroup.groupName,
+          CONCAT(es.expense.paidBy.name, ' paid ', es.expense.amount, ' in group ',
+                 es.expense.expenseGroup.groupName, ' for ', es.expense.description)
+        )
+        FROM ExpenseSplit es
+        WHERE es.user.id = :userId
+        AND es.expense.expenseGroup.id= :groupId
+    """)
+    List<RecentActivityResponseDto> recentActivityByGroupId(@Param("userId") Long userId, @Param("groupId") Long groupId);
+
 }

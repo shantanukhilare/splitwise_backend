@@ -1,5 +1,6 @@
 package app.splitwise.services.implementations;
 
+import app.splitwise.daos.FriendRepository;
 import app.splitwise.daos.GroupMemberRepository;
 import app.splitwise.daos.GroupRepository;
 import app.splitwise.daos.UserRepository;
@@ -27,6 +28,9 @@ public class GroupServiceImpl implements GroupService {
 
     @Autowired
     UserRepository userRepository;
+
+    @Autowired
+    FriendRepository friendRepository;
 
     @Autowired
     ModelMapper mapper;
@@ -89,15 +93,17 @@ public class GroupServiceImpl implements GroupService {
     }
 
     @Override
-    public List<FriendResponse> friendsList(Long userId) {
+    public List<AddMemberFriendsResponseDto> friendsList(Long userId) {
         var result= groupMemberRepository.getFriendsList(userId);
+        var result1=friendRepository.friendList(userId);
+        result.addAll(result1);
         return result.stream().distinct().toList();
     }
 
     @Override
     public List<String> friendsNames(Long userId) {
         var result=groupMemberRepository.getFriendsList(userId);
-        return result.stream().map(FriendResponse::getName).distinct().toList();
+        return result.stream().map(AddMemberFriendsResponseDto::getName).distinct().toList();
     }
 
 

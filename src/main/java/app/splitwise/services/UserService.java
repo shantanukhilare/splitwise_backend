@@ -18,6 +18,8 @@ public interface UserService {
     LoginResponseDto login(LoginRequestDto payload);
 
     ApiResponse deactivateUser(Long userId);
+
+    User findFriend(String name);
     
 
 

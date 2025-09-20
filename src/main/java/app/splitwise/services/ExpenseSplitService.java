@@ -16,5 +16,6 @@ public interface ExpenseSplitService {
     List<UserBalanceDto> getGroupWiseAmountsOwedToMe(Long userId, Long groupId);
     List<UserBalanceDto> getGroupWiseNetWithCounterparties(Long userId, Long groupId);
     List<RecentActivityResponseDto> getRecentActivity(Long userId);
+    List<RecentActivityResponseDto> getRecentActivityByGroupId(Long userId,Long groupId);
 
 }

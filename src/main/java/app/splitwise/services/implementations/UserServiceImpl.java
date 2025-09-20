@@ -80,6 +80,10 @@ public class UserServiceImpl implements UserService {
         return new ApiResponse("User " + user.getName() + " Deactivated Successfully");
     }
 
+    @Override
+    public User findFriend(String name) {
+        return userRepository.findByNameOrPhoneNumberOrEmailAndIsActiveTrue(name,name,name);
+    }
 
 
 }

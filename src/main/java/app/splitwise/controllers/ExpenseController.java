@@ -85,4 +85,9 @@ public class ExpenseController {
     public ResponseEntity<?> getRecentActivity(@PathVariable Long userId){
         return ResponseEntity.ok(expenseSplitService.getRecentActivity(userId));
     }
+
+    @GetMapping("/recentActivity/{userId}/{groupId}")
+    public ResponseEntity<?> getRecentActivity(@PathVariable Long userId, @PathVariable Long groupId){
+        return ResponseEntity.ok(expenseSplitService.getRecentActivityByGroupId(userId,groupId));
+    }
 }

@@ -29,6 +29,11 @@ public class UserController {
         return ResponseEntity.ok(userService.getAllUsers());
     }
 
+    @GetMapping("/search/{name}")
+    public ResponseEntity<?> findUser(@PathVariable String name) {
+        return ResponseEntity.ok(userService.findFriend(name));
+    }
+
     @PostMapping
     public ResponseEntity<?> createUser(@RequestBody UserCreateRequestBody payload) {
         ApiResponse msg = userService.registerUser(payload);

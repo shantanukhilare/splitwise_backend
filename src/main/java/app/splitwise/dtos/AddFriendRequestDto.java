@@ -7,5 +7,6 @@ import java.util.List;
 @Data
 public class AddFriendRequestDto {
     private Long userId;
-    private List<Long> friendIds;
+//    private List<Long> friendIds;
+    private String name;
 }

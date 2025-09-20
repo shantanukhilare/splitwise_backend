@@ -116,6 +116,11 @@ public class ExpenseSplitServiceImpl implements ExpenseSplitService {
         return expenseSplitRepository.recentActivity(userId);
     }
 
+    @Override
+    public List<RecentActivityResponseDto> getRecentActivityByGroupId(Long userId, Long groupId) {
+        return expenseSplitRepository.recentActivityByGroupId(userId,groupId);
+    }
+
     private static double safe(Double v) {
         return v == null ? 0.0 : v;
     }
