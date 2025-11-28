@@ -70,6 +70,7 @@ public class ExpenseServiceImpl implements ExpenseService {
         Collection<Double> amounts=payload.getUnevenAmounts().values();
         Double amount=amounts.stream().mapToDouble(Double::doubleValue).sum();
         expense.setAmount(amount);
+        expense.setDescription(payload.getDescription());
         expense.setSplitType(payload.getType());
         expenseRepository.save(expense);
 
@@ -79,6 +80,7 @@ public class ExpenseServiceImpl implements ExpenseService {
             split.setUser(user);
             split.setExpense(expense);
             split.setAmountOwed(map.getValue());
+            split.setOwedTo(paidBy);
             expenseSplitRepository.save(split);
         }
 

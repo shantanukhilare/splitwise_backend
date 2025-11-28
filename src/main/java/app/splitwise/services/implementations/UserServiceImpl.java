@@ -6,6 +6,7 @@ import app.splitwise.dtos.LoginRequestDto;
 import app.splitwise.dtos.LoginResponseDto;
 import app.splitwise.dtos.UserCreateRequestBody;
 import app.splitwise.entities.User;
+import app.splitwise.exceptions.UserAlreadyExistsException;
 import app.splitwise.services.UserService;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -37,14 +38,14 @@ public class UserServiceImpl implements UserService {
     @Override
     public ApiResponse registerUser(UserCreateRequestBody payload) {
         if(!userRepository.existsByNameOrPhoneNumberOrEmailAndIsActiveTrue(payload.getName(),payload.getPhoneNumber(),payload.getEmail())){
-        User user= modelMapper.map(payload,User.class);
-        user.setPassword(payload.getPassword());
-        user.setActive(true);
-        User user1=userRepository.save(user);
-        return new ApiResponse("User created successfully");
+            User user= modelMapper.map(payload,User.class);
+            user.setPassword(payload.getPassword());
+            user.setActive(true);
+            User user1=userRepository.save(user);
+            return new ApiResponse("User created successfully");
         }
         else
-            return new ApiResponse("User already Exists bro...");
+            throw new UserAlreadyExistsException("User already exists bro!");
     }
 
     @Override
@@ -56,7 +57,7 @@ public class UserServiceImpl implements UserService {
         );
         LoginResponseDto response = new LoginResponseDto();
         if (credentials == null) {
-            return null;
+            throw new RuntimeException("No matching credentials found...");
         }
         response.setName(credentials.getName());
         response.setEmail(credentials.getEmail());
@@ -66,6 +67,8 @@ public class UserServiceImpl implements UserService {
         if(payload.getPassword().equals(credentials.getPassword())){
             return response;
         }
+        else if(!payload.getPassword().equals(credentials.getPassword()))
+            throw new RuntimeException("Incorrect password... try again.");
         return null;
     }
 
